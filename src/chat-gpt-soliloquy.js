@@ -33,8 +33,18 @@ function getTheLastMessage() {
 }
 
 function sendMessage(text) {
-    $textarea.value = text
-    $submitBtn.click()
+    let value = ''
+    let idx = 0
+    const aminationInterval = setInterval(() => {
+        if (idx >= text.length) {
+            clearInterval(aminationInterval)
+            $submitBtn.click()
+            return
+        }
+        value += text[idx]
+        $textarea.value = value
+        idx++
+    }, 20)
 }
 
 function onAnotherBotMessageReceived(event) {
@@ -98,6 +108,7 @@ function main() {
     $container.appendChild($checkBox)
     $container.appendChild($label)
     $textarea.parentElement.appendChild($container)
+    $textarea.style = 'padding-right: 150px'
 }
 
 main()
