@@ -35,15 +35,19 @@ function getTheLastMessage() {
 function sendMessage(text) {
     let value = ''
     let idx = 0
+    let delay = 5000
     const aminationInterval = setInterval(() => {
         if (idx >= text.length) {
             clearInterval(aminationInterval)
-            $submitBtn.click()
+            setTimeout(() => {
+                $submitBtn.click()
+            }, delay)
             return
         }
         value += text[idx]
         $textarea.value = value
         idx++
+        delay = Math.max(100, delay - 20)
     }, 20)
 }
 
