@@ -100,4 +100,4 @@ function main() {
     $textarea.parentElement.appendChild($container)
 }
 
-document.addEventListener('DOMContentLoaded', main)
+main()

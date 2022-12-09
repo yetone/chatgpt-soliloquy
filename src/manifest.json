@@ -11,6 +11,7 @@
   "content_scripts": [
     {
       "matches": ["https://chat.openai.com/*"],
+      "include_globs": ["*chat.openai.com/chat*"],
       "js": ["chat-gpt-soliloquy.js"]
     }
   ]
