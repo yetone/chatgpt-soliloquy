@@ -1,0 +1,23 @@
+{
+  "name": "chat-gpt-soliloquy",
+  "version": "1.0.0",
+  "description": "ChatGPT-Soliloquy =================",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yetone/chat-gpt-soliloquy.git"
+  },
+  "author": "yetone <yetoneful@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yetone/chat-gpt-soliloquy/issues"
+  },
+  "homepage": "https://github.com/yetone/chat-gpt-soliloquy#readme",
+  "dependencies": {
+    "archiver": "^5.3.1",
+    "uuid": "^9.0.0"
+  }
+}
