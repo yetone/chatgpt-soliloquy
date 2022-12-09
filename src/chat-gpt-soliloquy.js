@@ -4,15 +4,6 @@ const $textarea = $bottomArea.querySelector('textarea')
 const $submitBtn = $bottomArea.querySelector('textarea').parentElement.querySelector('button')
 const channel = new BroadcastChannel('chatgpt-soliloquize')
 
-function getTryAgainBtn() {
-    const $btns = $bottomArea.querySelectorAll('button')
-    return Array.from($btns).find($btn => $btn.innerText.includes('Try again'))
-}
-
-function isResultStreaming() {
-    return $textMessageArea.querySelector('.result-streaming') !== null
-}
-
 function getTheLastMessage() {
     const childrenCount = $textMessageArea.childElementCount
     if (childrenCount < 2) {
@@ -20,6 +11,7 @@ function getTheLastMessage() {
             id: 0,
             text: '',
             isBot: false,
+            isTyping: false,
         }
     }
 
@@ -29,53 +21,47 @@ function getTheLastMessage() {
         id: childrenCount - 2,
         text: $lastMessage.querySelector('.whitespace-pre-wrap').innerText,
         isBot: $lastMessage.classList.contains('bg-gray-50'),
+        isTyping: $lastMessage.querySelector('.result-streaming') !== null
     }
 }
 
-function sendMessage(text) {
-    let value = ''
-    let idx = 0
-    let delay = 5000
-    const aminationInterval = setInterval(() => {
-        if (idx >= text.length) {
-            clearInterval(aminationInterval)
-            setTimeout(() => {
-                $submitBtn.click()
-            }, delay)
-            return
-        }
-        value += text[idx]
-        $textarea.value = value
-        idx++
-        delay = Math.max(100, delay - 20)
-    }, 20)
+let clearTextTimer = null
+
+function sendMessage(eventData) {
+    if (clearTextTimer) {
+        clearTimeout(clearTextTimer)
+    }
+    if (eventData.isTyping) {
+        $textarea.value = eventData.text
+        $textarea.dispatchEvent(new Event('input', { bubbles: true }))
+    } else {
+        $textarea.value = eventData.text
+        $textarea.dispatchEvent(new Event('input', { bubbles: true }))
+        $submitBtn.click()
+        clearTextTimer = setTimeout(() => {
+            $textarea.value = ''
+            $textarea.dispatchEvent(new Event('input', { bubbles: true }))
+        }, 500)
+    }
 }
 
 function onAnotherBotMessageReceived(event) {
     sendMessage(event.data)
 }
 
-let lastPostedMessageId = -1
-
 function textMessageAreaObserverCallback(mutationsList, observer) {
     for (const mutation of mutationsList) {
-        if (mutation.type === 'attributes') {
-            if (isResultStreaming()) {
-                continue
-            }
-            const lastMessage = getTheLastMessage()
-            if (!lastMessage.isBot) {
-                continue
-            }
-            if (lastMessage.id === lastPostedMessageId) {
-                continue
-            }
-            if (lastMessage.text === '') {
-                continue
-            }
-            lastPostedMessageId = lastMessage.id
-            channel.postMessage(lastMessage.text)
+        const lastMessage = getTheLastMessage()
+        if (!lastMessage.isBot) {
+            continue
         }
+        if (lastMessage.text === '') {
+            continue
+        }
+        channel.postMessage({
+            isTyping: lastMessage.isTyping,
+            text: lastMessage.text
+        })
     }
 }
 
@@ -83,7 +69,7 @@ const textMessageAreaObserver = new MutationObserver(textMessageAreaObserverCall
 
 function attach() {
     channel.addEventListener('message', onAnotherBotMessageReceived)
-    textMessageAreaObserver.observe($textMessageArea, { attributes: true, subtree: true, childList: true })
+    textMessageAreaObserver.observe($textMessageArea, { characterData: true, attributes: true, subtree: true, childList: true })
 }
 
 function detach() {
