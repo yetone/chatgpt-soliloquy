@@ -25,9 +25,13 @@ function getTheLastMessage() {
     }
 }
 
+let sendTextTimer = null
 let clearTextTimer = null
 
 function sendMessage(eventData) {
+    if (sendTextTimer) {
+        clearTimeout(sendTextTimer)
+    }
     if (clearTextTimer) {
         clearTimeout(clearTextTimer)
     }
@@ -37,11 +41,13 @@ function sendMessage(eventData) {
     } else {
         $textarea.value = eventData.text
         $textarea.dispatchEvent(new Event('input', { bubbles: true }))
-        $submitBtn.click()
-        clearTextTimer = setTimeout(() => {
-            $textarea.value = ''
-            $textarea.dispatchEvent(new Event('input', { bubbles: true }))
-        }, 500)
+        sendTextTimer = setTimeout(() => {
+            $submitBtn.click()
+            clearTextTimer = setTimeout(() => {
+                $textarea.value = ''
+                $textarea.dispatchEvent(new Event('input', { bubbles: true }))
+            }, 500)
+        }, 5000)
     }
 }
 
