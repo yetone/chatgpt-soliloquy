@@ -1,13 +1,13 @@
 {
   "name": "ChatGPT Soliloquy",
-  "description": "ChatGPT-Soliloquy is a Chrome extension that allows ChatGPT to engage in a conversation with itself. This extension provides an entertaining way to see ChatGPT in action and explore its capabilities.",
+  "description": "ChatGPT-Soliloquy is a Chrome extension that allows ChatGPT to engage in a conversation with itself.",
   "version": "1.2.0",
   "manifest_version": 3,
   "icons": {
-    "16": "assets/logo.jpg",
-    "32": "assets/logo.jpg",
-    "48": "assets/logo.jpg",
-    "128": "assets/logo.jpg"
+    "16": "assets/logo.png",
+    "32": "assets/logo.png",
+    "48": "assets/logo.png",
+    "128": "assets/logo.png"
   },
   "content_scripts": [
     {
