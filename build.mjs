@@ -35,7 +35,7 @@ async function build() {
     await deleteOldDir()
 
     const files = [
-        { src: 'src/assets/logo.jpg', dst: 'assets/logo.jpg' },
+        { src: 'src/assets/logo.png', dst: 'assets/logo.png' },
         { src: 'src/chat-gpt-soliloquy.js', dst: 'chat-gpt-soliloquy.js' },
         { src: 'src/manifest.json', dst: 'manifest.json' }
     ]
