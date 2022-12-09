@@ -1,8 +1,11 @@
 name: Pre-release
+
 on:
   push:
-    branches:
-      - main
+    tags: [ v\d+\.\d+\.\d+\-d\d+ ]
+  release:
+    types: [ published ]
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -16,12 +19,13 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - uses: josStorer/get-current-time@v2.0.2
-        id: current-time
+      - name: Get tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
         with:
-          format: YY_MMDD_HH_mm
+          strip_v: true
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Chromium_ChatGPT_Soliloquy_Extension_Build_${{ steps.current-time.outputs.formattedTime }}
+          name: Chromium_ChatGPT_Soliloquy_Extension_Build_${{ steps.tag.outputs.tag }}
           path: build/chromium/*
