@@ -1,0 +1,17 @@
+{
+  "name": "ChatGPT Soliloquy",
+  "version": "1.2.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "assets/logo.jpg",
+    "32": "assets/logo.jpg",
+    "48": "assets/logo.jpg",
+    "128": "assets/logo.jpg"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["chat-gpt-soliloquy.js"]
+    }
+  ]
+}
