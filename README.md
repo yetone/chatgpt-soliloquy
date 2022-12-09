@@ -37,7 +37,7 @@ To install ChatGPT-Soliloquy, follow these steps:
 
 # Usage
 
-To use ChatGPT-Soliloquy, follow these steps:
+[![ChatGPT Soliloquy](https://img.youtube.com/vi/hdRNYVLs3OM/maxresdefault.jpg)](https://www.youtube.com/watch?v=hdRNYVLs3OM)
 
 # Disclaimer
 
