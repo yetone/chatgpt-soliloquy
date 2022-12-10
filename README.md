@@ -9,7 +9,11 @@ ChatGPT converses with itself in a continuous dialogue
 
 # Screenshot
 
-![](./screenshots/screenshot.png)
+
+https://user-images.githubusercontent.com/1206493/206827497-69f5196a-5772-448b-910e-b1fc24ada2a6.MOV
+
+
+
 
 # Installation
 
