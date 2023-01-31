@@ -56,19 +56,17 @@ function onAnotherBotMessageReceived(event) {
 }
 
 function textMessageAreaObserverCallback(mutationsList, observer) {
-    for (const mutation of mutationsList) {
-        const lastMessage = getTheLastMessage()
-        if (!lastMessage.isBot) {
-            continue
-        }
-        if (lastMessage.text === '') {
-            continue
-        }
-        channel.postMessage({
-            isTyping: lastMessage.isTyping,
-            text: lastMessage.text
-        })
+    const lastMessage = getTheLastMessage()
+    if (!lastMessage.isBot) {
+        return
     }
+    if (lastMessage.text === '') {
+        return
+    }
+    channel.postMessage({
+        isTyping: lastMessage.isTyping,
+        text: lastMessage.text
+    })
 }
 
 const textMessageAreaObserver = new MutationObserver(textMessageAreaObserverCallback)
